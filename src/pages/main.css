@@ -1,0 +1,16 @@
+.headline-one {
+  margin-left: 10px;
+  justify-content: space-between;
+}
+
+.headline-two {
+  display: flex;
+}
+
+/* fab */
+
+.fab-style {
+  position: absolute;
+  bottom: 15;
+  right: 15;
+}

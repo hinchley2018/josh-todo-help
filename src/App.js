@@ -1,25 +1,97 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import Main from "./pages/Main";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
-function App() {
+const darkTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#f2f2f2",
+    },
+    secondary: {
+      main: "#00ff00",
+    },
+    mode: "dark",
+  },
+});
+
+const App = () => {
+  const [userData, setUserData] = useState();
+  const [update, setUpdate] = useState({});
+  const [openToDos, setOpenToDos] = useState([]);
+
+  const getData = async () => {
+    await fetch("https://jsonplaceholder.typicode.com/todos")
+      .then((response) => response.json())
+      .then((json) => setUserData(json))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const handleUpdateToDo = ({ id, title, status, userId }) => {
+    fetch("https://jsonplaceholder.typicode.com/posts/1", {
+      method: "PUT",
+      body: JSON.stringify({
+        id: id,
+        title: title,
+        userId: userId,
+        completed: status === "closed" ? true : false,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json))
+      .then(getData())
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleNewToDo = ({ toDo, toDoId, toDoStatus }) => {
+    fetch("https://jsonplaceholder.typicode.com/todos", {
+      method: "POST",
+      body: JSON.stringify({
+        title: toDo,
+        completed: toDoStatus === "closed" ? true : false,
+        userId: toDoId,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json))
+      .then(getData())
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleStatusUpdate = ({ id, completed, userId, title }) => {
+    setUpdate({
+      id: id,
+      title: title,
+      userId: userId,
+      completed: completed,
+    });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <>
+        <Main
+          {...{ userData, handleStatusUpdate, handleNewToDo, handleUpdateToDo }}
+        />
+      </>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
