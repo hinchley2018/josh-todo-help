@@ -18,6 +18,7 @@ const ToDoCard = ({
   handleGetCurrentToDo,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [editObj, setEditObj] = useState({});
 
   const open = Boolean(anchorEl);
 
@@ -45,14 +46,24 @@ const ToDoCard = ({
                   <Grid item xs={3}>
                     <div className="circle"></div>
                   </Grid>
-                  <Grid className="card-title" item xs={6}>
+                  <Grid className="card-title" item xs={true}>
                     {x.title}
                     <Typography>
                       <span className="user-span">User: {x.userId}</span>
                     </Typography>
                   </Grid>
                   <Grid className="elipsis-menu" item xs={3}>
-                    <MoreHorizIcon onClick={handleClick} />
+                    <MoreHorizIcon
+                      onClick={(e) => {
+                        handleClick(e);
+                        setEditObj({
+                          id: x.id,
+                          title: x.title,
+                          userId: x.userId,
+                          status: x.completed,
+                        });
+                      }}
+                    />
                     <Menu
                       id="basic-menu"
                       anchorEl={anchorEl}
@@ -79,12 +90,13 @@ const ToDoCard = ({
                       <MenuItem
                         onClick={() => {
                           handleClose();
-                          handleUpdateToDo({
+                          console.log("from menu", {
                             id: x.id,
                             title: x.title,
                             userId: x.userId,
                             status: "closed",
                           });
+                          handleUpdateToDo(editObj);
                         }}
                       >
                         Mark Completed
