@@ -8,122 +8,78 @@ import CheckIcon from "@mui/icons-material/Check";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-
-const ToDoCard = ({
-  openToDos,
-  value,
-  closedToDos,
-  handleUpdateToDo,
-  handleOpenEditDrawer,
-  handleGetCurrentToDo,
-}) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [editObj, setEditObj] = useState({});
-
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  return (
-    <>
-      <Paper
-        style={{
-          width: "100%",
-          height: 375,
-          overflow: "auto",
-          display: "flex",
-        }}
-        className="card-container"
-      >
-        <List>
-          {value === 0
-            ? openToDos?.map((x) => (
-                <Box key={x.id} className="card-container">
-                  <Grid item xs={3}>
-                    <div className="circle"></div>
-                  </Grid>
-                  <Grid className="card-title" item xs={true}>
-                    {x.title}
-                    <Typography>
-                      <span className="user-span">User: {x.userId}</span>
-                    </Typography>
-                  </Grid>
-                  <Grid className="elipsis-menu" item xs={3}>
-                    <MoreHorizIcon
-                      onClick={(e) => {
-                        handleClick(e);
-                        setEditObj({
-                          id: x.id,
-                          title: x.title,
-                          userId: x.userId,
-                          status: x.completed,
-                        });
-                      }}
-                    />
-                    <Menu
-                      id="basic-menu"
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      MenuListProps={{
-                        "aria-labelledby": "basic-button",
-                      }}
-                    >
-                      <MenuItem
-                        onClick={() => {
-                          handleGetCurrentToDo({
-                            id: x.id,
-                            title: x.title,
-                            userId: x.userId,
-                            status: x.completed,
-                          });
-                          handleOpenEditDrawer(true);
-                          handleClose();
-                        }}
-                      >
-                        Edit ToDo
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          handleClose();
-                          console.log("from menu", {
-                            id: x.id,
-                            title: x.title,
-                            userId: x.userId,
-                            status: "closed",
-                          });
-                          handleUpdateToDo(editObj);
-                        }}
-                      >
-                        Mark Completed
-                      </MenuItem>
-                    </Menu>
-                  </Grid>
-                </Box>
-              ))
-            : closedToDos?.map((x) => (
-                <Box key={x.id} className="card-container">
-                  <Grid item md={3}>
-                    <div className="circle-complete">
-                      <CheckIcon />
-                    </div>
-                  </Grid>
-                  <Grid className="card-title" item md={6}>
-                    {x.title}
-                    <Typography>
-                      <span className="user-span">User: {x.userId}</span>
-                    </Typography>
-                  </Grid>
-                </Box>
-              ))}
-        </List>
-      </Paper>
-    </>
-  );
-};
+const ToDoCard = ({td, 
+    handleGetCurrentToDo,
+    handleOpenEditDrawer,
+    handleUpdateToDo}) => {
+    // defined once -> needs to be defined for each todo card
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+  
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+    return (
+      <Box key={td.id} className="card-container">
+        <Grid item xs={3}>
+          <div className="circle"></div>
+        </Grid>
+        <Grid className="card-title" item xs={true}>
+          {td.title}
+          <Typography>
+            <span className="user-span">User: {td.userId}</span>
+          </Typography>
+        </Grid>
+        <Grid className="elipsis-menu" item xs={3}>
+          <MoreHorizIcon
+            onClick={(e) => {
+              handleClick(e);
+              console.log("open menu", td)
+            }}
+          />
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem
+              onClick={() => {
+                console.log("edit todo",td)
+                handleGetCurrentToDo({
+                  id: td.id,
+                  title: td.title,
+                  userId: td.userId,
+                  status: td.completed,
+                });
+                handleOpenEditDrawer(true);
+                handleClose();
+              }}
+            >
+              Edit ToDo {td.id}
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                handleUpdateToDo({
+                  id: td.id,
+                  title: td.title,
+                  userId: td.userId,
+                  status: "closed",
+                });
+              }}
+            >
+              Mark Completed
+            </MenuItem>
+          </Menu>
+        </Grid>
+      </Box>
+    )
+  }
 
 export default ToDoCard;

@@ -12,7 +12,7 @@ import "./main.css";
 import EditToDo from "../components/EditToDo";
 import AddToDo from "../components/AddToDo";
 import Typography from "@mui/material/Typography";
-import ToDoCard from "../components/ToDoCard";
+import ToDoList from "../components/ToDoList";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -60,6 +60,7 @@ const Main = ({ userData, handleNewToDo, handleUpdateToDo }) => {
   const [addDrawer, setAddDrawer] = useState(false);
   const [editDrawer, setEditDrawer] = useState(false);
   const [editStatus, setEditStatus] = useState("");
+  // which tab is open
   const [value, setValue] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const [editToDo, setEditToDo] = useState({});
@@ -154,7 +155,7 @@ const Main = ({ userData, handleNewToDo, handleUpdateToDo }) => {
             <SearchBar {...{ handleSearch, searchInput }} />
 
             <CustomTabPanel value={value} index={0}>
-              <ToDoCard
+              <ToDoList
                 {...{
                   handleUpdateToDo,
                   openToDos,
@@ -165,7 +166,7 @@ const Main = ({ userData, handleNewToDo, handleUpdateToDo }) => {
               />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <ToDoCard {...{ closedToDos, value }} />
+              <ToDoList {...{ closedToDos, value }} />
             </CustomTabPanel>
           </Box>
           <div>
