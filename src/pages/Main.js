@@ -121,22 +121,25 @@ const Main = ({ userData, handleNewToDo, handleUpdateToDo }) => {
         }}
       >
         <Paper elevation={3}>
-          <Typography
-            className="headline-one"
-            inline
-            variant="body1"
-            align="left"
-          >
-            <h2>ToDo's</h2>
-          </Typography>
-          <Typography
-            className="headline-two"
-            inline
-            variant="body1"
-            align="right"
-          >
-            <MoreHorizIcon />
-          </Typography>
+          <div className="main-header">
+            <Typography
+              className="headline-one"
+              inline
+              variant="body1"
+              align="left"
+            >
+              <h2>ToDo's</h2>
+            </Typography>
+            <Typography
+              className="headline-two"
+              inline
+              variant="body1"
+              align="right"
+            >
+              <MoreHorizIcon />
+            </Typography>
+          </div>
+
           <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs

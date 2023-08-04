@@ -1,3 +1,10 @@
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
+}
+
 .headline-one {
   margin-left: 10px;
   justify-content: space-between;
