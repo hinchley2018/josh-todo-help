@@ -17,8 +17,6 @@ const darkTheme = createTheme({
 
 const App = () => {
   const [userData, setUserData] = useState();
-  const [update, setUpdate] = useState({});
-  const [openToDos, setOpenToDos] = useState([]);
 
   const getData = async () => {
     await fetch("https://jsonplaceholder.typicode.com/todos")
@@ -74,21 +72,11 @@ const App = () => {
       });
   };
 
-  const handleStatusUpdate = ({ id, completed, userId, title }) => {
-    setUpdate({
-      id: id,
-      title: title,
-      userId: userId,
-      completed: completed,
-    });
-  };
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <>
-        <Main
-          {...{ userData, handleStatusUpdate, handleNewToDo, handleUpdateToDo }}
-        />
+        <Main {...{ userData, handleNewToDo, handleUpdateToDo }} />
       </>
     </ThemeProvider>
   );

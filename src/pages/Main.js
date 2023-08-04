@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import Box from "@mui/material/Box";
@@ -60,7 +60,6 @@ const Main = ({ userData, handleNewToDo, handleUpdateToDo }) => {
   const [addDrawer, setAddDrawer] = useState(false);
   const [editDrawer, setEditDrawer] = useState(false);
   const [editStatus, setEditStatus] = useState("");
-  const [editUser, setEditUser] = useState("");
   const [value, setValue] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const [editToDo, setEditToDo] = useState({});
@@ -94,10 +93,6 @@ const Main = ({ userData, handleNewToDo, handleUpdateToDo }) => {
 
   const handleEditStatus = (status) => {
     setEditStatus(status);
-  };
-
-  const handleEditUser = (user) => {
-    setEditUser(user);
   };
 
   const openToDos =
@@ -177,7 +172,6 @@ const Main = ({ userData, handleNewToDo, handleUpdateToDo }) => {
                 editStatus,
                 userData,
                 handleEditStatus,
-                handleEditUser,
                 handleNewToDo,
                 editToDo,
               }}

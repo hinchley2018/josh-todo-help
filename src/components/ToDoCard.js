@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
@@ -18,25 +18,8 @@ const ToDoCard = ({
   handleGetCurrentToDo,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [currentUser, setCurrentUser] = useState("");
-  const [currentTitle, setCurrentTitle] = useState("");
-  const [currentStatus, setCurrentStatus] = useState("");
-  const [selectedId, setSelectedId] = useState("");
 
   const open = Boolean(anchorEl);
-
-  useEffect(() => {
-    handleGetCurrentToDo({
-      id: selectedId,
-      title: currentTitle,
-      userId: currentUser,
-      status: currentStatus,
-    });
-  }, [selectedId, currentStatus, currentTitle, currentUser]);
-
-  const handleEditClick = () => {
-    handleOpenEditDrawer(true);
-  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
