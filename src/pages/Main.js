@@ -101,7 +101,12 @@ const Main = ({ userData, handleNewToDo, handleUpdateToDo }) => {
           return todo.title.match(searchInput);
         })
       : userData?.filter((x) => x.completed === true);
-  const closedToDos = userData?.filter((x) => x.completed === false);
+  const closedToDos =
+    searchInput.length > 0
+      ? userData.filter((todo) => {
+          return todo.title.match(searchInput);
+        })
+      : userData?.filter((x) => x.completed === false);
   return (
     <>
       <Box
